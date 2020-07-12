@@ -1,0 +1,39 @@
+$font-family: 'Ubuntu', 'Arial Narrow', Arial, sans-serif;
+$theme: #FF0000;
+$alt-color: #35495e;
+$white: rgba(255,255,255,0.9);
+
+
+.title {
+  font-family: $font-family;
+  display: block;
+  font-weight: 700;
+  font-size: 3rem;
+  color: $alt-color;
+  letter-spacing: 1px;
+}
+
+.subtitle {
+  font-family: $font-family;
+  font-weight: 300;
+  font-size: 2.2rem;
+  color: $theme;
+  word-spacing: 5px;
+  padding-bottom: 15px;
+}
+
+nav.navbar {
+  background-color: $theme;
+}
+.navbar-dark {
+  font-family: $font-family;
+  & .navbar-brand {
+    font-family: $font-family;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+}
+.navbar-dark .navbar-nav .nav-link {
+  color: $white;
+  font-family: $font-family;
+}

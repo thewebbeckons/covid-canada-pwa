@@ -1,279 +1,221 @@
 <template>
   <div class="container">
-    <b-row align-v="center" class="section--title">
-      <b-col cols="9">
-        <h1 class="title">
-          Overview
-        </h1>
-      </b-col>
-      <b-col>
-        <p class="text-right">
-          <fa icon="calendar-alt" /> Data updated {{ new Date() | moment('MMMM, Do') }}
-        </p>
-      </b-col>
-    </b-row>
-    <b-row class="section--data">
-      <b-col cols="3">
-        <div class="card confirmed">
-          <div class="card-content">
-            <div class="card-body">
-              <div class="media d-flex text-light">
-                <!-- <div class="align-self-center ">
-                  <fa icon="chart-line" size="3x" />
-                </div> -->
-                <div class="media-body text-right">
-                  <animated-number
-                    :value="canada.total_new_cases_today"
-                    :duration="400"
-                    :delay="100"
-                    :formatValue="formatNumber"
-                  />
-                  <span>New Daily Cases</span>
+    <div id="content">
+      <b-row class="section--title align-items-end">
+        <b-col cols="12" lg="5">
+          <h1 class="title">
+            Overview
+          </h1>
+          <p>
+            <small><fa icon="calendar-alt" /> Updated {{ [lastUpdated, 'YYYY-MM-DD HH:mm:ss'] | moment('MMM, Do @ h:mma') }} CST</small>
+          </p>
+        </b-col>
+      </b-row>
+      <b-row class="section--data">
+        <b-col cols="12" lg="3" md="6" class="mb-3 mb-lg-0">
+          <div class="card bg-primary">
+            <div class="card-content">
+              <div class="card-body">
+                <div class="media d-flex text-light">
+                  <!-- <div class="align-self-center ">
+                    <fa icon="chart-line" size="3x" />
+                  </div> -->
+                  <div class="media-body text-right">
+                    <h3>{{ formatNumber(current.total_cases) }} ({{ formatNumber(current.change_cases, true) }})</h3>
+                    <span>Total Cases</span>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </b-col>
-      <b-col cols="3">
-        <div class="card deaths">
-          <div class="card-content">
-            <div class="card-body">
-              <div class="media d-flex text-light">
-                <div class="media-body text-right">
-                  <AnimatedNumber
-                    :value="canada.total_new_deaths_today"
-                    :duration="400"
-                    :delay="100"
-                    :formatValue="formatNumber"
-                  />
-                  <span>New Daily Deaths</span>
+        </b-col>
+        <b-col cols="12" md="6" lg="3" class="mb-3 mb-lg-0">
+          <div class="card bg-danger">
+            <div class="card-content">
+              <div class="card-body">
+                <div class="media d-flex text-light">
+                  <div class="media-body text-right">
+                    <h3>{{ formatNumber(current.total_fatalities) }} ({{ formatNumber(current.change_fatalities, true) }})</h3>
+                    <span>Total Deaths</span>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </b-col>
-    </b-row>
-    <b-row class="section--title">
-      <b-col>
-        <h1 class="title">
-          Canadian Totals
-        </h1>
-      </b-col>
-    </b-row>
-    <b-row class="section--data">
-      <b-col cols="3">
-        <div class="card">
-          <div class="card-content">
-            <div class="card-body">
-              <div class="media d-flex text-dark">
-                <div class="media-body text-right confirmed-text">
-                  <animated-number
-                    :value="canada.total_cases"
-                    :duration="400"
-                    :delay="100"
-                    :formatValue="formatNumber"
-                  />
-                  <span>Total Confirmed</span>
+        </b-col>
+        <b-col cols="12" md="6" lg="3" class="mb-3 mb-lg-0">
+          <div class="card bg-warning">
+            <div class="card-content">
+              <div class="card-body">
+                <div class="media d-flex text-light">
+                  <!-- <div class="align-self-center ">
+                    <fa icon="chart-line" size="3x" />
+                  </div> -->
+                  <div class="media-body text-right">
+                    <h3>{{ formatNumber(current.total_hospitalizations) }} ({{ formatNumber(current.change_hospitalizations, true) }})</h3>
+                    <span>Total Hospitalizations</span>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </b-col>
-      <b-col cols="3">
-        <div class="card">
-          <div class="card-content">
-            <div class="card-body">
-              <div class="media d-flex text-light">
-                <div class="media-body text-right recovered-text">
-                  <animated-number
-                    :value="canada.total_recovered"
-                    :duration="400"
-                    :delay="100"
-                    :formatValue="formatNumber"
-                  />
-                  <span>Total Recovered</span>
+        </b-col>
+        <b-col cols="12" md="6" lg="3" class="mb-3 mb-lg-0">
+          <div class="card bg-success">
+            <div class="card-content">
+              <div class="card-body">
+                <div class="media d-flex text-light">
+                  <!-- <div class="align-self-center ">
+                    <fa icon="chart-line" size="3x" />
+                  </div> -->
+                  <div class="media-body text-right">
+                    <h3>{{ formatNumber(current.total_recoveries) }} ({{ formatNumber(current.change_recoveries, true) }})</h3>
+                    <span>Total Recoveries</span>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </b-col>
-      <b-col cols="3">
-        <div class="card">
-          <div class="card-content">
-            <div class="card-body">
-              <div class="media d-flex deaths-text">
-                <div class="media-body text-right ">
-                  <animated-number
-                    :value="canada.total_deaths"
-                    :duration="400"
-                    :delay="100"
-                    :formatValue="formatNumber"
-                  />
-                  <span>Total Deaths</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </b-col>
-      <b-col cols="3">
-        <div class="card">
-          <div class="card-content">
-            <div class="card-body">
-              <div class="media d-flex text-light">
-                <div class="media-body text-right info-text">
-                  <animated-number
-                    :value="canada.total_active_cases"
-                    :duration="400"
-                    :delay="100"
-                    :formatValue="formatNumber"
-                  />
-                  <span>Total Active Cases</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </b-col>
-    </b-row>
-    <b-row class="section--data">
-      <b-col>
-        <h1 class="title">
-          7-Day Trend
-        </h1>
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col>
-        <div class="day-trend">
-          <!-- <svg style="width:0; height:0; position:absolute;" aria-hidden="true" focusable="false">
-            <defs>
-              <linearGradient id="redFill" x1="1" x2="1" y1="0" y2="1">
-                <stop offset="0%" stop-color="#ff6060" />
-                <stop offset="100%" stop-color="#ffffff" />
-              </linearGradient>
-              <linearGradient id="greyFill" x1="1" x2="1" y1="0" y2="1">
-                <stop offset="0%" stop-color="grey" />
-                <stop offset="100%" stop-color="#ffffff" />
-              </linearGradient>
-            </defs>
-          </svg> -->
-          <TrendChart
-            :datasets="datasets"
-            :labels="labels"
-            :grid="grid"
-            :min="0"
+        </b-col>
+      </b-row>
+      <b-row class="section--data">
+        <b-col>
+          <h1 class="title">
+            7-Day Trend
+          </h1>
+        </b-col>
+      </b-row>
+      <b-row>
+        <b-col>
+          <line-chart
+            :chartdata="chartdata"
+            :options="options"
           />
-        </div>
-      </b-col>
-    </b-row>
+        </b-col>
+      </b-row>
+    </div>
   </div>
 </template>
 
 <script>
-import AnimatedNumber from 'animated-number-vue'
-import TrendChart from 'vue-trend-chart'
+import moment from 'moment'
+import LineChart from '~/components/LineChart'
 
 export default {
   components: {
-    AnimatedNumber,
-    TrendChart
+    LineChart
+  },
+  async asyncData ({ $axios }) {
+    // Get Current date data and last updated
+    let current = await $axios.$get('summary')
+    const lastUpdated = current.last_updated
+    current = current.data[0]
+    // Get Trend Chart Data
+    const data = await $axios.$get('reports')
+    const chartdata = {
+      labels: [],
+      datasets: [
+        {
+          label: 'Cases',
+          backgroundColor: 'rgba(0, 123, 255, 0.7)',
+          pointBackgroundColor: 'rgb(0, 123, 255)',
+          data: []
+        },
+        {
+          label: 'Deaths',
+          backgroundColor: 'rgb(220, 53, 69, 0.7)',
+          pointBackgroundColor: 'rgb(220, 53, 69)',
+          data: []
+        }
+      ]
+    }
+    // Cut the data down to the last 7 days
+    const newData = data.data.slice(data.data.length - 7, data.data.length)
+    // Populate the chartdata
+    newData.forEach((item) => {
+      const newDate = moment(item.date, 'YYYY-MM-DD').format('MMM, Do')
+      chartdata.labels.push(newDate)
+      chartdata.datasets[0].data.push(item.change_cases)
+      chartdata.datasets[1].data.push(item.change_fatalities)
+    })
+    return { current, lastUpdated, chartdata }
   },
   data () {
     return {
-      canada: [],
-      datasets: [
-        {
-          data: [0, 0],
-          smooth: true,
-          fill: true,
-          showPoints: true,
-          className: 'curve1'
+      loaded: true,
+      // chartdata: {
+      //   labels: [],
+      //   datasets: [
+      //     {
+      //       label: 'Cases',
+      //       backgroundColor: 'rgba(0, 123, 255, 0.7)',
+      //       pointBackgroundColor: 'rgb(0, 123, 255)',
+      //       data: []
+      //     },
+      //     {
+      //       label: 'Deaths',
+      //       backgroundColor: 'rgb(220, 53, 69, 0.7)',
+      //       pointBackgroundColor: 'rgb(220, 53, 69)',
+      //       data: []
+      //     }
+      //   ]
+      // },
+      options: {
+        tooltips: {
+          backgroundColor: 'rgba(255,255,255,0.9)',
+          titleFontColor: 'black',
+          bodyFontColor: 'black',
+          footerFontColor: 'black'
+          // yAlign: 'bottom'
         },
-        {
-          data: [0, 0],
-          smooth: true,
-          fill: true,
-          showPoints: true,
-          className: 'curve2'
-        }
-      ],
-      globalData: [],
-      totalPopCanada: 37590000,
-      labels: {
-        xLabels: [],
-        yLabels: 5,
-        yLabelsTextFormatter: val => Math.floor(val)
-      },
-      grid: {
-        verticalLines: true,
-        verticalLinesNumber: 1,
-        horizontalLines: true,
-        horizontalLinesNumber: 1
+        responsive: true,
+        maintainAspectRatio: false
       }
     }
   },
   computed: {
-    deathRateCanada (country) {
-      const percent = (this.canada.total_deaths / this.canada.total_cases) * 100
-      return percent.toFixed(2)
-    },
-    deathRatePopCanada (country) {
-      const deathRate = (this.canada.total_deaths / this.totalPopCanada) * 100
-      return deathRate.toFixed(2)
-    },
-    confirmedRateCanada (country) {
-      const rate = (this.canada.total_cases / this.totalPopCanada) * 100
-      return rate.toFixed(2)
-    }
   },
-  mounted () {
-    fetch('https://api.thevirustracker.com/free-api?countryTotal=CA')
-      .then((response) => {
-        response.json().then((canada) => {
-          this.canada = canada.countrydata[0]
-        })
-      })
-    fetch('https://api.thevirustracker.com/free-api?countryTimeline=CA')
-      .then((response) => {
-        response.json().then((data) => {
-          this.labels.xLabels = Object.keys(data.timelineitems[0]).slice(-8)
-          this.labels.xLabels.pop()
-          const dailyCases = Object.values(data.timelineitems[0]).slice(-8)
-          dailyCases.pop()
-          dailyCases.forEach((date) => {
-            this.datasets[0].data.push(Number(date.new_daily_cases))
-            this.datasets[1].data.push(Number(date.new_daily_deaths))
-          })
-          this.datasets[0].data = this.datasets[0].data.slice(2)
-          this.datasets[1].data = this.datasets[1].data.slice(2)
-        })
-      })
-    fetch('https://api.thevirustracker.com/free-api?global=stats')
-      .then((response) => {
-        response.json().then((data) => {
-          this.globalData = data
-        })
-      })
-  },
+  // mounted () {
+  //   this.fetchTimeline()
+  // },
   methods: {
-    formatNumber (value) {
-      return `<h1> ${new Intl.NumberFormat('en-US', { maximumSignificantDigits: 3 }).format(value)}</h1>`
+    formatNumber (value, type) {
+      if (!value.startsWith('-') && type === true) {
+        return '+' + new Intl.NumberFormat('en-US').format(value)
+      } else {
+        return new Intl.NumberFormat('en-US').format(value)
+      }
     }
+    // async fetchTimeline () {
+    //   this.loaded = false
+    //   try {
+    //     const data = await this.$axios.$get('reports')
+    //     const newData = data.data.slice(data.data.length - 7, data.data.length)
+    //     newData.forEach((item) => {
+    //       const newDate = moment(item.date, 'YYYY-MM-DD').format('MMM, Do')
+    //       this.chartdata.labels.push(newDate)
+    //       this.chartdata.datasets[0].data.push(item.change_cases)
+    //       this.chartdata.datasets[1].data.push(item.change_fatalities)
+    //     })
+    //     this.loaded = true
+    //   } catch (error) {
+    //     return { error }
+    //   }
+    // }
   }
 }
 </script>
 
 <style lang="scss">
-$red: #ff6060;
-$blue: #6b93ff;
+$red: rgb(220, 53, 69);
+$blue: rgb(0, 123, 255);
 $green: #2f944d;
 $grey: rgba(128, 128, 128, 0.9);
 
+.loading {
+  min-height: 100vh;
+  vertical-align: middle;
+}
 .section {
   &--title {
     padding-top: 2rem;
@@ -291,67 +233,5 @@ $grey: rgba(128, 128, 128, 0.9);
   font-weight: 400;
   letter-spacing: 1px;
   text-transform: uppercase;
-}
-.confirmed {
-  background-color:$red;
-  &-text {
-    color: $red;
-  }
-}
-.deaths {
-  background-color: $grey;
-  &-text {
-    color: $grey;
-  }
-}
-.recovered {
-  background-color: $green;
-  &-text {
-    color: $green;
-  }
-}
-.info {
-  background-color: $blue;
-  &-text {
-    color: $blue;
-  }
-}
-.day-trend {
-  .vtc {
-    height: 350px;
-    font-size: 12px;
-    font-family: 'Ubuntu', 'Arial Narrow', Arial, sans-serif;
-  }
-  margin-bottom: 3rem;
-}
-.curve1 {
-  .stroke {
-    stroke: $red;
-    stroke-width: 2;
-  }
-  .fill {
-    fill: url(#redFill);
-    fill-opacity: 0.5;
-  }
-}
-.curve2 {
-  .stroke {
-    stroke: $grey;
-    stroke-width: 2;
-  }
-  .fill {
-    fill: url(#greyFill);
-    fill-opacity: 0.5;
-  }
-}
-.grid,
-.labels {
-  line {
-    stroke: rgba(0,0,0, 0.3);
-  }
-}
-.container {
-  margin: 0 auto;
-  min-height: 100vh;
 }
 </style>

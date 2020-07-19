@@ -1,13 +1,12 @@
-$font-family: 'Ubuntu', 'Arial Narrow', Arial, sans-serif;
+$font-family: 'Source Sans Pro', 'Arial Narrow', Arial, sans-serif;
 $theme: #FF0000;
 $alt-color: #35495e;
 $white: rgba(255,255,255,0.9);
 
-
 .title {
   font-family: $font-family;
   display: block;
-  font-weight: 700;
+  font-weight: 600;
   font-size: 3rem;
   color: $alt-color;
   letter-spacing: 1px;

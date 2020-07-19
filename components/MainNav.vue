@@ -2,7 +2,7 @@
   <div>
     <b-navbar toggleable="lg" type="dark" fixed="top">
       <div class="container">
-        <b-navbar-brand to="/">
+        <b-navbar-brand :to="{name: 'index'}">
           <fa icon="virus" /> covid canada
         </b-navbar-brand>
 

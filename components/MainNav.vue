@@ -3,7 +3,7 @@
     <b-navbar toggleable="lg" type="dark" fixed="top">
       <div class="container">
         <b-navbar-brand to="/">
-        <fa icon="virus" /> covid canada
+          <fa icon="virus" /> covid canada
         </b-navbar-brand>
 
         <b-navbar-toggle target="nav-collapse" />

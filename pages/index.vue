@@ -197,7 +197,7 @@ export default {
     },
     async fetchCurrent () {
       try {
-        await fetch('https://api.covid19tracker.ca/summary', { cache: 'force-cache' })
+        await fetch('https://api.covid19tracker.ca/summary', { cache: 'force-cache', mode: 'no-cors' })
           .then(res => res.json())
           .then((data) => {
             this.lastUpdated = data.last_updated
@@ -209,7 +209,7 @@ export default {
     },
     async fetchReports () {
       try {
-        await fetch('https://api.covid19tracker.ca/reports', { cache: 'force-cache' })
+        await fetch('https://api.covid19tracker.ca/reports', { cache: 'force-cache', mode: 'no-cors' })
           .then(res => res.json())
           .then((data) => {
             // Cut the data down to the last 7 days

@@ -107,11 +107,11 @@ export default {
   },
   async asyncData ({ $axios }) {
     // Get Current date data and last updated
-    let current = await $axios.$get('/api/summary')
+    let current = await $axios.$get('https://api.covid19tracker.ca/summary')
     const lastUpdated = current.last_updated
     current = current.data[0]
     // Get Trend Chart Data
-    const data = await $axios.$get('/api/reports')
+    const data = await $axios.$get('https://api.covid19tracker.ca/reports')
     const chartdata = {
       labels: [],
       datasets: [

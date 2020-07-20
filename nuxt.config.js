@@ -72,17 +72,18 @@ export default {
     '@nuxt/content'
   ],
   proxy: {
-    '/api/': {
-      target: 'https://api.covid19tracker.ca',
-      pathRewrite: { '^/api/': '' }
-    }
+    // '/api/': {
+    //   target: 'https://api.covid19tracker.ca',
+    //   pathRewrite: { '^/api/': '' }
+    // }
   },
   /*
   ** Axios module configuration
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
-    proxy: true
+    // baseURL:
+    // proxy: false
   },
   /*
   ** Content module configuration

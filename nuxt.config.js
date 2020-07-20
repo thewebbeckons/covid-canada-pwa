@@ -71,19 +71,16 @@ export default {
     // Doc: https://github.com/nuxt/content
     '@nuxt/content'
   ],
-  proxy: {
-    // '/api/': {
-    //   target: 'https://api.covid19tracker.ca',
-    //   pathRewrite: { '^/api/': '' }
-    // }
-  },
+  // proxy: {
+  //   '/api/': 'https://api.covid19tracker.ca/summary',
+  //   '/api2/': 'https://api.covid19tracker.ca/reports'
+  // },
   /*
   ** Axios module configuration
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
-    // baseURL:
-    // proxy: false
+    baseURL: 'https://api.covid19tracker.ca/'
   },
   /*
   ** Content module configuration

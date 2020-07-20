@@ -66,16 +66,22 @@ export default {
     'bootstrap-vue/nuxt',
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
+    '@nuxtjs/proxy',
     '@nuxtjs/pwa',
     // Doc: https://github.com/nuxt/content
     '@nuxt/content'
   ],
+  proxy: {
+    '/api/': {
+      target: 'https://api.covid19tracker.ca',
+      pathRewrite: { '^/api/': '' }
+    }
+  },
   /*
   ** Axios module configuration
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
-    baseURL: 'https://api.covid19tracker.ca/',
     proxy: true
   },
   /*

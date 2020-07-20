@@ -107,11 +107,11 @@ export default {
   },
   async asyncData ({ $axios }) {
     // Get Current date data and last updated
-    let current = await $axios.$get('summary')
+    let current = await $axios.$get('/api/summary')
     const lastUpdated = current.last_updated
     current = current.data[0]
     // Get Trend Chart Data
-    const data = await $axios.$get('reports')
+    const data = await $axios.$get('/api/reports')
     const chartdata = {
       labels: [],
       datasets: [
@@ -143,30 +143,12 @@ export default {
   data () {
     return {
       loaded: true,
-      // chartdata: {
-      //   labels: [],
-      //   datasets: [
-      //     {
-      //       label: 'Cases',
-      //       backgroundColor: 'rgba(0, 123, 255, 0.7)',
-      //       pointBackgroundColor: 'rgb(0, 123, 255)',
-      //       data: []
-      //     },
-      //     {
-      //       label: 'Deaths',
-      //       backgroundColor: 'rgb(220, 53, 69, 0.7)',
-      //       pointBackgroundColor: 'rgb(220, 53, 69)',
-      //       data: []
-      //     }
-      //   ]
-      // },
       options: {
         tooltips: {
           backgroundColor: 'rgba(255,255,255,0.9)',
           titleFontColor: 'black',
           bodyFontColor: 'black',
           footerFontColor: 'black'
-          // yAlign: 'bottom'
         },
         responsive: true,
         maintainAspectRatio: false
@@ -175,9 +157,6 @@ export default {
   },
   computed: {
   },
-  // mounted () {
-  //   this.fetchTimeline()
-  // },
   methods: {
     formatNumber (value, type) {
       if (!value.startsWith('-') && type === true) {
@@ -186,22 +165,6 @@ export default {
         return new Intl.NumberFormat('en-US').format(value)
       }
     }
-    // async fetchTimeline () {
-    //   this.loaded = false
-    //   try {
-    //     const data = await this.$axios.$get('reports')
-    //     const newData = data.data.slice(data.data.length - 7, data.data.length)
-    //     newData.forEach((item) => {
-    //       const newDate = moment(item.date, 'YYYY-MM-DD').format('MMM, Do')
-    //       this.chartdata.labels.push(newDate)
-    //       this.chartdata.datasets[0].data.push(item.change_cases)
-    //       this.chartdata.datasets[1].data.push(item.change_fatalities)
-    //     })
-    //     this.loaded = true
-    //   } catch (error) {
-    //     return { error }
-    //   }
-    // }
   }
 }
 </script>

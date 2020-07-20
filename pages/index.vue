@@ -147,8 +147,24 @@ export default {
     return {
       loaded: false,
       current: {},
+      chartdata: {
+        labels: [],
+        datasets: [
+          {
+            label: 'Cases',
+            backgroundColor: 'rgba(0, 123, 255, 0.7)',
+            pointBackgroundColor: 'rgb(0, 123, 255)',
+            data: []
+          },
+          {
+            label: 'Deaths',
+            backgroundColor: 'rgb(220, 53, 69, 0.7)',
+            pointBackgroundColor: 'rgb(220, 53, 69)',
+            data: []
+          }
+        ]
+      },
       lastUpdated: 0,
-      chartdata: null,
       options: {
         tooltips: {
           backgroundColor: 'rgba(255,255,255,0.9)',
@@ -162,15 +178,6 @@ export default {
     }
   },
   computed: {
-    // current () {
-    //   return this.$store.state.current
-    // },
-    // lastUpdated () {
-    //   return this.$store.state.lastUpdated
-    // },
-    // chartdata () {
-    //   return this.$store.state.reports
-    // }
   },
   // created () {
   //   this.$store.dispatch('getSummary')
@@ -182,16 +189,15 @@ export default {
   },
   methods: {
     formatNumber (value, type) {
-      if (!value.startsWith('-') && type === true) {
+      if (type === true) {
         return '+' + new Intl.NumberFormat('en-US').format(value)
       } else {
         return new Intl.NumberFormat('en-US').format(value)
       }
     },
     async fetchCurrent () {
-      this.loaded = false
       try {
-        await fetch('https://api.covid19tracker.ca/summary')
+        await fetch('https://api.covid19tracker.ca/summary', { cache: 'force-cache' })
           .then(res => res.json())
           .then((data) => {
             this.lastUpdated = data.last_updated
@@ -202,44 +208,25 @@ export default {
       }
     },
     async fetchReports () {
-      this.loaded = false
       try {
-        await fetch('https://api.covid19tracker.ca/reports')
+        await fetch('https://api.covid19tracker.ca/reports', { cache: 'force-cache' })
           .then(res => res.json())
           .then((data) => {
-            const chartdata = {
-              labels: [],
-              datasets: [
-                {
-                  label: 'Cases',
-                  backgroundColor: 'rgba(0, 123, 255, 0.7)',
-                  pointBackgroundColor: 'rgb(0, 123, 255)',
-                  data: []
-                },
-                {
-                  label: 'Deaths',
-                  backgroundColor: 'rgb(220, 53, 69, 0.7)',
-                  pointBackgroundColor: 'rgb(220, 53, 69)',
-                  data: []
-                }
-              ]
-            }
             // Cut the data down to the last 7 days
             const newData = data.data.slice(data.data.length - 7, data.data.length)
             // Populate the chartdata
             newData.forEach((item) => {
               const newDate = moment(item.date, 'YYYY-MM-DD').format('MMM, Do')
-              chartdata.labels.push(newDate)
-              chartdata.datasets[0].data.push(item.change_cases)
-              chartdata.datasets[1].data.push(item.change_fatalities)
+              this.chartdata.labels.push(newDate)
+              this.chartdata.datasets[0].data.push(item.change_cases)
+              this.chartdata.datasets[1].data.push(item.change_fatalities)
             })
-            this.chartdata = chartdata
-            this.loaded = true
           })
       } catch (error) {
         return error
       }
-      
+      this.loaded = true
+      // setTimeout(function () { this.loaded = true }, 1000)
     }
   }
 }

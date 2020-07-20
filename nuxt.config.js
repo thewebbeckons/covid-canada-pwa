@@ -81,7 +81,12 @@ export default {
   */
   axios: {
     baseURL: 'https://api.covid19tracker.ca/'
+    // proxy: true
   },
+  // proxy: {
+  //   '/api/': 'https://api.covid19tracker.ca/summary',
+  //   '/api2/': 'https://api.covid19tracker.ca/reports'
+  // },
   /*
   ** Content module configuration
   ** See https://content.nuxtjs.org/configuration

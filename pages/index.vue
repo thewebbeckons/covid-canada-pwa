@@ -90,6 +90,7 @@
       <b-row>
         <b-col>
           <line-chart
+            v-if="loaded"
             :chartdata="chartdata"
             :options="options"
           />
@@ -100,52 +101,51 @@
 </template>
 
 <script>
-// import moment from 'moment'
+import moment from 'moment'
 import LineChart from '~/components/LineChart'
 
 export default {
   components: {
     LineChart
   },
-  // async asyncData ({ $axios }) {
-  //   // Get Current date data and last updated
-  //   let current = await $axios.$get('https://api.covid19tracker.ca/summary')
-  //   const lastUpdated = current.last_updated
-  //   current = current.data[0]
-  //   // Get Trend Chart Data
-  //   const data = await $axios.$get('https://api.covid19tracker.ca/reports')
-  //   const chartdata = {
-  //     labels: [],
-  //     datasets: [
-  //       {
-  //         label: 'Cases',
-  //         backgroundColor: 'rgba(0, 123, 255, 0.7)',
-  //         pointBackgroundColor: 'rgb(0, 123, 255)',
-  //         data: []
-  //       },
-  //       {
-  //         label: 'Deaths',
-  //         backgroundColor: 'rgb(220, 53, 69, 0.7)',
-  //         pointBackgroundColor: 'rgb(220, 53, 69)',
-  //         data: []
-  //       }
-  //     ]
-  //   }
-  //   // Cut the data down to the last 7 days
-  //   const newData = data.data.slice(data.data.length - 7, data.data.length)
-  //   // Populate the chartdata
-  //   newData.forEach((item) => {
-  //     const newDate = moment(item.date, 'YYYY-MM-DD').format('MMM, Do')
-  //     chartdata.labels.push(newDate)
-  //     chartdata.datasets[0].data.push(item.change_cases)
-  //     chartdata.datasets[1].data.push(item.change_fatalities)
-  //   })
-  //   return { current, lastUpdated, chartdata }
-  // },
+  async asyncData ({ $axios }) {
+    // Get Current date data and last updated
+    let current = await $axios.$get('https://api.covid19tracker.ca/summary')
+    const lastUpdated = current.last_updated
+    current = current.data[0]
+    // Get Trend Chart Data
+    const data = await $axios.$get('https://api.covid19tracker.ca/reports')
+    const chartdata = {
+      labels: [],
+      datasets: [
+        {
+          label: 'Cases',
+          backgroundColor: 'rgba(0, 123, 255, 0.7)',
+          pointBackgroundColor: 'rgb(0, 123, 255)',
+          data: []
+        },
+        {
+          label: 'Deaths',
+          backgroundColor: 'rgb(220, 53, 69, 0.7)',
+          pointBackgroundColor: 'rgb(220, 53, 69)',
+          data: []
+        }
+      ]
+    }
+    // Cut the data down to the last 7 days
+    const newData = data.data.slice(data.data.length - 7, data.data.length)
+    // Populate the chartdata
+    newData.forEach((item) => {
+      const newDate = moment(item.date, 'YYYY-MM-DD').format('MMM, Do')
+      chartdata.labels.push(newDate)
+      chartdata.datasets[0].data.push(item.change_cases)
+      chartdata.datasets[1].data.push(item.change_fatalities)
+    })
+    return { current, lastUpdated, chartdata }
+  },
   data () {
     return {
-      loaded: true,
-      value: '',
+      loaded: false,
       options: {
         tooltips: {
           backgroundColor: 'rgba(255,255,255,0.9)',
@@ -159,19 +159,22 @@ export default {
     }
   },
   computed: {
-    current () {
-      return this.$store.state.current
-    },
-    lastUpdated () {
-      return this.$store.state.lastUpdated
-    },
-    chartdata () {
-      return this.$store.state.reports
-    }
+    // current () {
+    //   return this.$store.state.current
+    // },
+    // lastUpdated () {
+    //   return this.$store.state.lastUpdated
+    // },
+    // chartdata () {
+    //   return this.$store.state.reports
+    // }
   },
-  created () {
-    this.$store.dispatch('getSummary')
-    this.$store.dispatch('getReports')
+  // created () {
+  //   this.$store.dispatch('getSummary')
+  //   this.$store.dispatch('getReports')
+  // },
+  mounted () {
+    this.checkData()
   },
   methods: {
     formatNumber (value, type) {
@@ -180,6 +183,11 @@ export default {
         return '+' + new Intl.NumberFormat('en-US').format(value)
       } else {
         return new Intl.NumberFormat('en-US').format(value)
+      }
+    },
+    checkData () {
+      if (this.chartdata.labels.length) {
+        this.loaded = true
       }
     }
   }

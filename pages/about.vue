@@ -24,7 +24,7 @@
           the wonderful <a class="nuxt" href="https://surge.sh/">surge.sh</a>
         </p>
         <p>
-          And I guess a little bit about me, I'm a mainly self taught, trying to be full-stack web developer from Toronto, Ontario. Spending most of my time
+          And I guess a little bit about me, I'm a mainly self taught full-stack web developer from Toronto, Ontario. Spending most of my time
           right now working on projects in <span class="nuxt">VueJS/NuxtJS/WordPress</span>
         </p>
         <p>

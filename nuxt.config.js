@@ -80,6 +80,9 @@ export default {
     baseURL: 'https://api.covid19tracker.ca/'
     // proxy: true
   },
+  generate: {
+    fallback: true
+  },
   /*
   ** Build configuration
   ** See https://nuxtjs.org/api/configuration-build/

@@ -9,7 +9,7 @@ export default {
   ** Nuxt target
   ** See https://nuxtjs.org/api/configuration-target
   */
-  target: 'server',
+  target: 'static',
   /*
   ** Headers of the page
   ** See https://nuxtjs.org/api/configuration-head
@@ -66,10 +66,7 @@ export default {
     'bootstrap-vue/nuxt',
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
-    '@nuxtjs/proxy',
-    '@nuxtjs/pwa',
-    // Doc: https://github.com/nuxt/content
-    '@nuxt/content'
+    '@nuxtjs/pwa'
   ],
   // proxy: {
   //   '/api/': 'https://api.covid19tracker.ca/summary',
@@ -83,15 +80,6 @@ export default {
     baseURL: 'https://api.covid19tracker.ca/'
     // proxy: true
   },
-  // proxy: {
-  //   '/api/': 'https://api.covid19tracker.ca/summary',
-  //   '/api2/': 'https://api.covid19tracker.ca/reports'
-  // },
-  /*
-  ** Content module configuration
-  ** See https://content.nuxtjs.org/configuration
-  */
-  content: {},
   /*
   ** Build configuration
   ** See https://nuxtjs.org/api/configuration-build/
